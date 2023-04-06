@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import github.preeti5sharon.currencyconverter.databinding.ActivityMainBinding
@@ -27,13 +26,13 @@ class MainActivity : AppCompatActivity() {
             viewModel.convert(
                 _binding?.etFrom?.text.toString(),
                 _binding?.spFromCurrency?.selectedItem.toString(),
-                _binding?.spToCurrency?.selectedItem.toString()
+                _binding?.spToCurrency?.selectedItem.toString(),
             )
         }
 
         lifecycleScope.launchWhenCreated {
             viewModel.conversion.collectLatest { event ->
-                when(event) {
+                when (event) {
                     is MainViewModel.CurrencyEvent.Success -> {
                         _binding?.progressBar?.isVisible = false
                         _binding?.tvResult?.setTextColor(Color.GREEN)

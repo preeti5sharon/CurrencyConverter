@@ -3,11 +3,9 @@ package github.preeti5sharon.currencyconverter.main
 import github.preeti5sharon.currencyconverter.data.CurrencyAPI
 import github.preeti5sharon.currencyconverter.data.models.CurrencyResponse
 import github.preeti5sharon.currencyconverter.util.Resource
-import retrofit2.Response
-import javax.inject.Inject
 
 class DefaultMainRepository constructor(
-    private val api: CurrencyAPI
+    private val api: CurrencyAPI,
 ) : MainRepository {
     override suspend fun getRates(base: String): Resource<CurrencyResponse> {
         return try {
