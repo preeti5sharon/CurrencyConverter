@@ -1,6 +1,5 @@
 package github.preeti5sharon.currencyconverter.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +15,7 @@ import kotlin.math.round
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: MainRepository,
-    private val dispatcher: DispatcherProvider
+    private val dispatcher: DispatcherProvider,
 ) : ViewModel() {
 
     sealed class CurrencyEvent {
@@ -42,8 +41,9 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch(dispatcher.io) {
             _conversion.value = CurrencyEvent.Loading
             when (val ratesResponse = repository.getRates(fromCurrency)) {
-                is Resource.Error -> _conversion.value =
-                    CurrencyEvent.Error(ratesResponse.message!!)
+                is Resource.Error ->
+                    _conversion.value =
+                        CurrencyEvent.Error(ratesResponse.message!!)
                 is Resource.Success -> {
                     val rates = ratesResponse.data!!.rates!!
                     val rate = getRateForCurrency(toCurrency, rates)
@@ -52,7 +52,7 @@ class MainViewModel @Inject constructor(
                     } else {
                         val convertedCurrency = round(fromAmount * rate * 100) / 100
                         _conversion.value = CurrencyEvent.Success(
-                            "$fromAmount $fromCurrency = $convertedCurrency $toCurrency"
+                            "$fromAmount $fromCurrency = $convertedCurrency $toCurrency",
                         )
                     }
                 }

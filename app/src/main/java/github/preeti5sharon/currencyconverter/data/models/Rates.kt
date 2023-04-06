@@ -1,6 +1,5 @@
 package github.preeti5sharon.currencyconverter.data.models
 
-
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -341,5 +340,5 @@ data class Rates(
     @Json(name = "ZMW")
     val zMW: Double? = null,
     @Json(name = "ZWL")
-    val zWL: Double? = null
+    val zWL: Double? = null,
 )
